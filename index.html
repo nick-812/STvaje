@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src http://localhost:* https://localhost:*">
+    <title>MyPet</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+  </head>
+  <body>
+    <h1>MyPet</h1>
+    <h2>Seznam podatkov</h2>
+    <button id="new_users">Posodobi</button><button id="upload">Naloži</button><br><br>
+    <table id="users" border="1" width="98%" display="block">
+        <tr>
+          <th width="25%">ID</th>
+          <th width="12%">Name</th> 
+          <th width="13%">Date</th>
+          <th width="25%">User ID</th>
+          <th width="25%">Animal ID</th>
+        </tr>
+    </table>
+
+    <h3>Vnos</h3>
+    <label for="vnosName">Name:</label>
+    <input type="text" id="vnosName" name="vnosName"><br><br>
+    <label for="vnosDate">Date:</label>
+    <input type="text" id="vnosDate" name="vnosDate"><br><br>
+    <label for="vnosUser">User ID:</label>
+    <input type="text" id="vnosUser" name="vnosUser"><br><br>
+    <label for="vnosAnimal">Animal ID:</label>
+    <input type="text" id="vnosAnimal" name="vnosAnimal"><br><br>
+    <button id="vnos">Vnos</button><br><br>
+
+    <h3>Urejanje</h3>
+    <label for="urejanjeID">ID:</label>
+    <input type="text" id="urejanjeID" name="urejanjeID"><br><br>
+    <label for="urejanjeTip">Tip podatka:</label>
+    <input type="text" id="urejanjeTip" name="urejanjeTip"><br><br>
+    <label for="urejanjeVrednost">Vrednost:</label>
+    <input type="text" id="urejanjeVrednost" name="urejanjeVrednost"><br><br>
+    <button id="urejanje">Uredi</button><br><br>
+    
+    <h3>Izbris</h3>
+    <label for="izbrisID">ID:</label>
+    <input type="text" id="izbrisID" name="izbrisID"><br><br>
+    <button id="izbris">Izbriši</button><br><br>
+
+    <h3>Iskanje</h3>
+    <label for="iskanjeID">ID:</label>
+    <input type="text" id="iskanjeID" name="iskanjeID"><br><br>
+    <button id="iskanje">Iskanje</button><br><br>
+    <label id="iskanjeOut"></label>
+
+    <!-- <script src=script.js></script> -->
+    <script>
+      const {ipcRenderer} = require('electron')
+      ipcRenderer.on('posodobiTabelo', (event) => {
+          document.getElementById("new_users").click()
+      })
+      ipcRenderer.on('pocistiTabelo', (event) => {
+        var Table = document.getElementById("users");
+        Table.innerHTML = "<tr><th width=\"25%\">ID</th><th width=\"12%\">Name</th><th width=\"13%\">Date</th><th width=\"25%\">Animal ID</th><th width=\"25%\">Owner ID</th></tr>";
+      })
+      ipcRenderer.on('fetchajPodatke', (event) => {
+          document.getElementById("upload").click()
+      })
+    </script>
+  </body>
+</html>
+
